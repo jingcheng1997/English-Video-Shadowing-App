@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#1f5a4b">
+  <title>English Video Shadowing App</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="logo">▶</div><div class="brand"><small>ENGLISH VIDEO SHADOWING</small><h1>逐句跟读训练</h1></div>
+    <span class="local-pill">● 本地处理</span>
+    <label class="btn primary">上传视频<input id="videoInput" type="file" accept="video/*"></label>
+  </header>
+  <section class="projectbar">
+    <div><small>当前项目</small><strong id="projectName">Meeting English · 演示项目</strong></div>
+    <div class="meta"><span id="sentenceTotal">5 句</span><span id="practiceTotal">4 句需跟读</span><span id="subtitleName">内置示例字幕</span></div>
+  </section>
+
+  <main class="workspace">
+    <section class="player-column">
+      <div id="videoStage" class="video-stage demo">
+        <video id="video" playsinline></video>
+        <div id="demoVisual" class="demo-visual"><div class="person a"></div><div class="table"></div><div class="person b"></div><i>DEMO</i></div>
+        <div id="subtitleOverlay" class="subtitle-overlay"><em id="speaker">女声 · Speaker A</em><strong id="english">Morning, everyone. Shall we get started?</strong><p id="chinese">大家早上好，我们开始吧？</p></div>
+        <button id="stagePlay" class="stage-play" aria-label="播放">▶</button>
+      </div>
+      <div class="transport-card">
+        <div class="progress"><span id="startTime">00:00.0</span><div><i id="progressBar"></i></div><span id="endTime">00:22.8</span></div>
+        <div class="transport">
+          <button id="prevBtn">‹<small>上一句</small></button><button id="repeatBtn">↻<small>重播本句</small></button>
+          <button id="playBtn" class="big-play">▶</button><button id="nextBtn">›<small>下一句</small></button>
+          <button id="loopBtn">∞<small>单句循环</small></button>
+        </div>
+      </div>
+      <div id="practicePrompt" class="practice-prompt hidden"><div><small>轮到你了</small><strong>请跟读当前句，完成后继续</strong></div><button id="completeBtn" class="btn accent">完成，下一句 →</button></div>
+      <div class="settings-grid">
+        <div class="setting"><small>播放模式</small><div class="segment"><button data-mode="normal">连续播放</button><button class="active" data-mode="shadowing">逐句跟读</button></div></div>
+        <div class="setting"><small>字幕显示</small><div class="segment three"><button class="active" data-subtitle="both">双语</button><button data-subtitle="english">英文</button><button data-subtitle="off">关闭</button></div></div>
+        <div class="setting rate"><small>播放速度</small><select id="rateSelect"><option value="0.5">0.5×</option><option value="0.75">0.75×</option><option selected value="1">1.0×</option><option value="1.25">1.25×</option></select></div>
+      </div>
+      <div class="import-card"><span>CC</span><div><strong>导入时间轴字幕</strong><p>支持 SRT 和 VTT，文件只在当前设备处理。</p></div><label class="btn primary">选择字幕<input id="subtitleInput" type="file" accept=".srt,.vtt,text/vtt"></label></div>
+      <p id="notice" class="notice">当前为演示内容；上传视频和字幕即可开始自己的项目。</p>
+    </section>
+
+    <aside class="sentence-panel">
+      <div class="panel-head"><div><small>句子时间轴</small><h2 id="position">1 / 5</h2></div><button id="editBtn" aria-label="编辑当前句">✎</button></div>
+      <div class="summary"><div><strong id="doneCount">2</strong><span>已练习</span></div><div><strong id="selectedCount">4</strong><span>需跟读</span></div><div><strong id="completion">50%</strong><span>完成度</span></div></div>
+      <div id="editor" class="editor hidden"><div><strong>编辑当前句</strong><button id="closeEditor">完成</button></div><section><label>开始时间<input id="editStart" type="number" step="0.1"></label><label>结束时间<input id="editEnd" type="number" step="0.1"></label></section><label>说话人<input id="editSpeaker"></label><label>英文<textarea id="editEnglish"></textarea></label><label>中文<textarea id="editChinese"></textarea></label></div>
+      <label class="search">⌕<input id="searchInput" placeholder="搜索字幕…"></label>
+      <div id="sentenceList" class="sentence-list"></div>
+    </aside>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
